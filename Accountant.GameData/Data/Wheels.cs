@@ -25,6 +25,12 @@ public class Wheels
 
     internal Wheels(IDataManager gameData)
     {
+        if (gameData.Language == ClientLanguage.ChineseSimplified)
+        {
+            InitializeChinese(gameData);
+            return;
+        }
+
         var items        = gameData.GetExcelSheet<Item>(ClientLanguage.English);
         var itemsLang    = gameData.GetExcelSheet<Item>();
         var primedWheels = new List<(string, uint)>(50);
@@ -60,6 +66,33 @@ public class Wheels
                 continue;
             _nameToItem.TryAdd(fullName, data);
             _nameToItem.TryAdd(singular, data);
+        }
+    }
+
+    private static readonly Regex ChineseWheelRegex = new(@"^(?<grade>[1-3])级.+以太转轮$", RegexOptions.Compiled);
+
+    private void InitializeChinese(IDataManager gameData)
+    {
+        // CN clients need not have the English Item sheet or a matching en-lite pack.
+        var items = gameData.Excel.GetSheet<Item>(gameData.Language.ToLumina());
+        foreach (var item in items)
+        {
+            var name = item.Name.ExtractText();
+            var match = ChineseWheelRegex.Match(name);
+            if (!match.Success)
+                continue;
+
+            var grade = (byte)(match.Groups["grade"].Value[0] - '0');
+            var entry = (item, name, grade);
+            _idToItem.TryAdd(item.RowId, entry);
+            _nameToItem.TryAdd(name, entry);
+        }
+
+        foreach (var item in items)
+        {
+            var name = item.Name.ExtractText();
+            if (name.Contains("充能转轮") && _nameToItem.TryGetValue(name.Replace("充能转轮", "以太转轮"), out var entry))
+                _nameToItem.TryAdd(name, entry);
         }
     }
 }

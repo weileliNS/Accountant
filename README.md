@@ -1,6 +1,6 @@
 # Accountant CN
 
-国服社区维护分支，基于 [Ottermandias/Accountant](https://github.com/Ottermandias/Accountant) 和 [MapleRecall/Accountant](https://github.com/MapleRecall/Accountant)。保留 Apache-2.0 协议和原作者署名。
+国服社区维护分支，基于 [Ottermandias/Accountant](https://github.com/Ottermandias/Accountant) 、[MapleRecall/Accountant](https://github.com/MapleRecall/Accountant) 和历史汉化分支 [decorwdyun/Accountant](https://github.com/decorwdyun/Accountant)。保留 Apache-2.0 协议和原作者署名。
 
 ## 安装与更新
 
@@ -21,6 +21,8 @@ https://raw.githubusercontent.com/weileliNS/DalamudPlugins/main/repo.json
 - 中文角色名没有空格时也能重载雇员、任务和私人作物数据。
 - 取消确认框时不创建/删除作物计时，拒绝越界的种植位置。
 - 保留 MapleRecall 分支的仙人仙彩开奖时间缺失回退。
+- 恢复历史汉化中的中文转轮确认、仙人仙彩号码提取和园圃等基础名称。
+- 国服转轮直接读取中文物品表，避免依赖不可用的英文 Item 表。
 
 ## 支持边界
 
@@ -28,7 +30,7 @@ https://raw.githubusercontent.com/weileliNS/DalamudPlugins/main/repo.json
 
 继承原插件的 81 条作物/种子配置。文本解析测试通过不代表每种植物均已实机测试。用户已确认补录的 3 株克拉卡萝卜和 5 株巫茄可正常显示；新播种、护理、收获的完整流程仍需更多实测。
 
-尚未扩展花盆观赏花卉种子，未实现施肥后精确提前倒数，也未完成所有界面中文翻译。以太转轮和仙人仙彩仍有依赖英日等语言文本的旧逻辑，列为后续工作。详见 `CN_COMPATIBILITY.md`。
+尚未扩展花盆观赏花卉种子，未实现施肥后精确提前倒数，也未完成所有界面中文翻译。中文转轮映射和仙人仙彩号码提取已验证，完整实机流程仍待验证。详见 `CN_COMPATIBILITY.md`。
 
 ## 本地构建
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -48,12 +48,13 @@ public static class LocalizationDict<T> where T : Enum
     public static bool Register(T key, string s)
         => Register(key, new LocName(s));
 
-    public static bool RegisterName(T key, ClientLanguage lang, string en, string jp, string de, string fr)
+    public static bool RegisterName(T key, ClientLanguage lang, string en, string jp, string de, string fr, string cn)
         => lang switch
         {
             ClientLanguage.Japanese => Register(key, jp),
             ClientLanguage.German   => Register(key, de),
             ClientLanguage.French   => Register(key, fr),
+            ClientLanguage.ChineseSimplified        => Register(key, cn),
             _                       => Register(key, en),
         };
 

@@ -7,5 +7,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../../Accountant.GameData/Internal/CnCropText.cs" Link="CnCropText.cs" />
+    <Compile Include="../../Accountant.GameData/Internal/CnDialogText.cs" Link="CnDialogText.cs" />
   </ItemGroup>
 </Project>
