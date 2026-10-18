@@ -10,6 +10,8 @@
 https://raw.githubusercontent.com/weileliNS/DalamudPlugins/main/repo.json
 ```
 
+如果当前游戏进程已经加载过 1.8.3.5 旧索引，普通刷新可能命中框架的三小时内存缓存。可以把仓库地址改为 `https://raw.githubusercontent.com/weileliNS/DalamudPlugins/main/repo.json?channel=cn`，保存后刷新列表。此地址仍随仓库发布更新。
+
 在 `/xlsettings` 的自定义插件仓库列表中添加上述地址，再于 `/xlplugins` 中选择本仓库的 Accountant CN。
 
 内部名称从 1.8.3.6 起为 `AccountantCN`，与官方 `Accountant` 独立。国服框架会按官方清单中的内部名称屏蔽第三方同名条目，是否已卸载官方版不影响这项过滤；因此旧的 1.8.3.5 自定义条目无法正常显示，重启也不能解决。
