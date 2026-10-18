@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Accountant.Enums;
@@ -29,6 +29,9 @@ internal static class Localization
 
     private static StringParser PatchParser(ClientLanguage lang)
     {
+        if (lang == ClientLanguage.ChineseSimplified)
+            return new StringParser(CnCropText.ParsePatch);
+
         var (bed, patch) = lang switch
         {
             ClientLanguage.German   => (15, 5),
@@ -76,10 +79,21 @@ internal static class Localization
         matcher = SeStringMatcher.SinglePayloadComparer(data.Language, addon.GetRow(6413).Text.ExtractText(), 0, 0, ^1, ^1);
         LocalizationDict<StringId>.Register(StringId.CropPrepareBed, matcher);
 
-        LocalizationDict<StringId>.Register(StringId.PlantMatcher, SeStringParser.SpecificPayload(data.Language, 2, 3, 2, 3));
+        if (data.Language == ClientLanguage.ChineseSimplified)
+        {
+            LocalizationDict<StringId>.Register(StringId.PlantMatcher, new StringParser(CnCropText.ParsePlant));
+            LocalizationDict<StringId>.RegisterComparer(StringId.CropDoingWell, CnCropText.HealthySuffix, MatchType.EndsWith);
+            LocalizationDict<StringId>.RegisterComparer(StringId.CropBetterDays, CnCropText.UnhealthySuffix, MatchType.EndsWith);
+        }
+        else
+        {
+            LocalizationDict<StringId>.Register(StringId.PlantMatcher, SeStringParser.SpecificPayload(data.Language, 2, 3, 2, 3));
+        }
         LocalizationDict<StringId>.Register(StringId.PatchMatcher, PatchParser(data.Language));
         LocalizationDict<StringId>.Register(StringId.SeedMatcher,
-            StringParser.FromRegex(data.Language, PlantingTextEn, PlantingTextFr, PlantingTextJp, PlantingTextDe, "seeds", "soil"));
+            StringParser.FromRegex(data.Language,
+                data.Language == ClientLanguage.ChineseSimplified ? CnCropText.Seed : PlantingTextEn,
+                PlantingTextFr, PlantingTextJp, PlantingTextDe, "seeds", "soil"));
     }
 
     private static readonly Regex WheelTextEn = new(@"Place (the )?(?<wheel>.*?) on the wheel stand\?", RegexOptions.Compiled | RegexOptions.ExplicitCapture);

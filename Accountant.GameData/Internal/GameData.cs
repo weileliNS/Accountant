@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Accountant.Data;
@@ -129,13 +129,13 @@ internal class GameData : IGameData
         if (world.Name.IsEmpty)
             return false;
 
-        if (!world.DataCenter.IsValid)
+        if (world.DataCenter.RowId == 0 || !world.DataCenter.IsValid)
             return false;
 
         if (world.RowId < 1024)
             return false;
 
-        if (world.Region != 101)
+        if (world.Region != 2)
             return false;
 
         return true;

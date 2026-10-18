@@ -1,10 +1,10 @@
-name: Accountant
-author: Ottermandias
+name: Accountant CN
+author: Ottermandias; MapleRecall; weileliNS
 description: |-
-  Keep track of retainer, airship, submersible, aetherial wheel and crop timers
-  as well as several miscellaneous tasks of multiple characters.
-punchline: Character task timers.
-repo_url: https://github.com/Ottermandias/Accountant
+  国服维护版：记录雇员、飞空艇、潜水艇、以太转轮、作物及多角色任务计时。
+  包含中文园艺文本、国服服务器和中文角色名兼容修复。
+punchline: 国服角色任务与园艺计时。
+repo_url: https://github.com/weileliNS/Accountant
 tags:
   - Airship
   - Gardening

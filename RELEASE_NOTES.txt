@@ -1,0 +1,15 @@
+Accountant CN 1.8.3.4
+
+Based on Ottermandias/Accountant and MapleRecall/Accountant 1.8.3.3.
+Fix Chinese planting confirmation, outdoor patch/bed parsing, and tending status text.
+Fix CN World.Region filtering and reject retired worlds whose data-center ID is zero.
+Accept Chinese player names without spaces when reloading saved character data.
+Ignore canceled Yes/No confirmations and reject negative patch/bed indexes.
+Preserve the CN fork's missing Jumbo Cactpot reset-hour fallback.
+
+Scope: existing crop table and CN API 15. Flowerpot flower seeds, fertilizer-adjusted
+timers, and full Chinese UI translation are not included. Automatic planting/tending
+still requires additional live validation beyond parser tests and restored timer display.
+
+AI disclosure: changes and tests were developed with substantial Codex assistance.
+Source is available at https://github.com/weileliNS/Accountant under Apache-2.0.

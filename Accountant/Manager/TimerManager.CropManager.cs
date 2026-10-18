@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Accountant.Enums;
 using Accountant.Gui.Timer;
@@ -89,7 +89,7 @@ public partial class TimerManager
             {
                 var patch = data[0][0] - '1';
                 var bed   = data[1][0] - '1';
-                if (patch < 3 && bed < 8)
+                if (patch is >= 0 and < 3 && bed is >= 0 and < 8)
                 {
                     _lastPatch = (ushort)patch;
                     _lastBed   = (ushort)bed;
@@ -208,6 +208,9 @@ public partial class TimerManager
 
         private void SelectYesnoEventDetour(IntPtr atkUnit, bool yesOrNo, SeString buttonText, SeString descriptionText)
         {
+            if (!yesOrNo)
+                return;
+
             CropData GetCropData(string text)
             {
                 var ret = StringId.SeedMatcher.Filter(text);
