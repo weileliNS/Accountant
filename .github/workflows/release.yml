@@ -1,0 +1,31 @@
+name: Publish CN release
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag matching the project version, e.g. v1.8.3.4
+        required: true
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.402'
+      - shell: pwsh
+        run: ./scripts/Get-Dalamud.ps1 -Destination "$env:RUNNER_TEMP/dalamud-cn"
+      - run: dotnet run --project tests/Accountant.CnText.Tests -c Release
+      - shell: pwsh
+        run: ./scripts/Build-Release.ps1 -DalamudPath "$env:RUNNER_TEMP/dalamud-cn"
+      - name: Publish immutable versioned assets
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: |
+          $manifest = Get-Content dist/Accountant.json -Raw | ConvertFrom-Json
+          if ($env:RELEASE_TAG -ne "v$($manifest.AssemblyVersion)") { throw 'Tag/version mismatch' }
+          gh release create $env:RELEASE_TAG dist/latest.zip dist/Accountant.json dist/SHA256SUMS.txt --target $env:GITHUB_SHA --title "Accountant CN $($manifest.AssemblyVersion)" --notes-file RELEASE_NOTES.txt
