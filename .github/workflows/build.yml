@@ -1,0 +1,27 @@
+name: Build CN plugin
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.402'
+      - name: Download pinned CN Dalamud reference assemblies
+        shell: pwsh
+        run: ./scripts/Get-Dalamud.ps1 -Destination "$env:RUNNER_TEMP/dalamud-cn"
+      - name: Run parser regression tests
+        run: dotnet run --project tests/Accountant.CnText.Tests -c Release
+      - name: Build and package
+        shell: pwsh
+        run: ./scripts/Build-Release.ps1 -DalamudPath "$env:RUNNER_TEMP/dalamud-cn"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Accountant-CN
+          path: dist/*
