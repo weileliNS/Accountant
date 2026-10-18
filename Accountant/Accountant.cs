@@ -11,7 +11,7 @@ namespace Accountant;
 public class Accountant : IDalamudPlugin
 {
     public string Name
-        => "Accountant";
+        => "Accountant CN";
 
     public static string Version = "";
 
@@ -28,6 +28,8 @@ public class Accountant : IDalamudPlugin
     public Accountant(IDalamudPluginInterface pluginInterface)
     {
         Dalamud.Initialize(pluginInterface);
+        if (LegacyConfigMigration.Import(pluginInterface.ConfigDirectory.FullName))
+            Dalamud.Log.Information("Imported legacy Accountant settings and timers into AccountantCN; original files were preserved.");
         Interop.Init(Dalamud.Log, Dalamud.SigScanner);
         Version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "";
         Config  = AccountantConfiguration.Load();

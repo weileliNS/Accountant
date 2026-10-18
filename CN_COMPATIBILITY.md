@@ -44,3 +44,9 @@ CN 文本模板来自当前客户端：Addon 6413（播种）和 6420（园圃/�
 已比较国服 Dalamud 的 `73e74411db3a2d190df705d377bf164180c298b5` 与 `ecd08fafd6092c51a011b23fe322442baaecf5ce`。公开变更涉及上游生命周期性能、UI/手柄、CRT 和 ClientStructs 更新；未看到替代本插件中文文本或 World 筛选修复的专项变更。
 
 参考分发固定在 `ottercorp/dalamud-distrib` 的 `51baf663aeb9f93cb0bfdddeb0956365c8ee4dfe`。API/客户端更新时先更新引用，再运行解析与配置重载测试，并重新实机确认。
+
+## 自定义源同名过滤与配置迁移（1.8.3.6）
+
+对照国服框架当前安装提交的 [PluginRepository.cs](https://github.com/ottercorp/Dalamud/blob/73e74411db3a2d190df705d377bf164180c298b5/Dalamud/Plugin/Internal/Types/PluginRepository.cs#L142)：第三方条目的 InternalName 只要存在于官方清单中就会被过滤，代码并未检查是否已经安装。日志却使用 already installed 描述，容易误判；仅卸载、重启不能解决。
+
+从 1.8.3.6 起改用独立 InternalName/程序集名 AccountantCN。首次运行只向空的 CN 配置位置复制旧文件，并仅重写 JSON `$type` 元数据里的主程序集名，不改变普通文字、其他程序集或原始文件。24 项迁移测试覆盖旧数据保留、重复导入保护、已有 CN 数据保护、嵌套泛型类型、时间戳和损坏 JSON。另以当前实际设置副本验证 25 个颜色设置及八株记录可由新程序集重载。完整的游戏安装与加载仍需实机确认。

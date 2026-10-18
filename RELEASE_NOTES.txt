@@ -1,4 +1,11 @@
-Accountant CN 1.8.3.5
+Accountant CN 1.8.3.6
+
+Use the independent InternalName and assembly name AccountantCN. CN Dalamud filters
+third-party entries whose names exist in the official catalogue, even after uninstall.
+On first CN launch, copy legacy settings/timers and rebind serialized assembly names.
+Preserve original files and existing CN configuration. Keep crop timestamps unchanged.
+Verified 24 migration assertions and actual saved configuration/eight-crop reload.
+Do not enable the official Accountant and Accountant CN simultaneously.
 
 Based on Ottermandias/Accountant, MapleRecall/Accountant 1.8.3.3, and historical CN localization by decorwdyun.
 Fix Chinese planting confirmation, outdoor patch/bed parsing, and tending status text.

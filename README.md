@@ -12,9 +12,11 @@ https://raw.githubusercontent.com/weileliNS/DalamudPlugins/main/repo.json
 
 在 `/xlsettings` 的自定义插件仓库列表中添加上述地址，再于 `/xlplugins` 中选择本仓库的 Accountant CN。
 
-内部名称仍为 `Accountant`，便于沿用原有配置和作物记录。已安装官方源 Accountant 的用户应先备份配置，卸载旧版本后从自定义源安装；Dalamud 会阻止第三方仓库直接替换官方源已安装的同名插件。不要同时启用两个版本。
+内部名称从 1.8.3.6 起为 `AccountantCN`，与官方 `Accountant` 独立。国服框架会按官方清单中的内部名称屏蔽第三方同名条目，是否已卸载官方版不影响这项过滤；因此旧的 1.8.3.5 自定义条目无法正常显示，重启也不能解决。
 
-卸载后若显示“等待删除”或仍只看到官方版本，请先完全退出并重新启动游戏，让旧安装删除生效，再刷新插件仓库并选择 **Accountant CN 1.8.3.5**（或本源更新的版本）。不要在等待删除期间重新安装官方版；旧版的服务器校验会拒绝现有国服作物记录。
+保留旧版配置和数据，卸载或停用官方 Accountant，刷新插件列表后安装 **Accountant CN 1.8.3.6**（或本源更新版本）。不要同时启用两个版本，它们使用相同的聊天命令。
+
+首次启动且 CN 配置为空时，插件会把旧 `Accountant.json` 和 `Accountant/` 数据复制到独立的 `AccountantCN.json` 和 `AccountantCN/`，同时迁移 JSON 中的程序集类型引用。原文件保留不动；已有 CN 配置或数据时不会自动覆盖。现有作物的播种时间也会保留。
 
 ## 当前修复
 
